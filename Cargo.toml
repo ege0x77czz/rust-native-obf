@@ -1,0 +1,25 @@
+[package]
+name = "rust-native-obf"
+version = "0.1.0"
+edition = "2021"
+authors = ["ege"]
+license = "MIT"
+description = "advanced native obfuscation library for rust"
+repository = "https://github.com/ege0x77czz/rust-native-obf"
+keywords = ["obfuscation", "security", "anti-reverse", "protection", "native"]
+categories = ["development-tools", "no-std"]
+
+[lib]
+name = "rust_native_obf"
+path = "src/lib.rs"
+
+[dependencies]
+
+[[example]]
+name = "basic"
+path = "examples/basic.rs"
+
+[[example]]
+name = "advanced"
+path = "examples/advanced.rs"
+
