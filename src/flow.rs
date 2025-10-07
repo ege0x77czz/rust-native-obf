@@ -6,7 +6,7 @@ pub const fn gen_flow_keys<const N: usize>(base: u32, stmts: &[&'static str; N])
         let stmt_bytes = stmts[i].as_bytes();
         let mut j = 0;
         while j < stmt_bytes.len() {
-            state ^= (stmt_bytes[j] as u32).wrapping_shl((j & 3) * 8);
+            state ^= (stmt_bytes[j] as u32).wrapping_shl(((j & 3) * 8) as u32);
             state = state.wrapping_mul(0x27d4eb2d);
             j += 1;
         }

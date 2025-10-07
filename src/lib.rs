@@ -135,7 +135,7 @@ impl<T: Sized> ObfuscatedValue<T> {
 }
 
 pub fn tamper_check(expected: u32) -> bool {
-    let actual = ct_hash!("tamper_check");
+    let actual = ct_xxhash!(b"tamper_check");
     actual == expected
 }
 
@@ -143,7 +143,6 @@ pub fn anti_debug() -> bool {
     #[cfg(target_os = "windows")]
     {
         unsafe {
-            use std::ptr::null_mut;
             extern "system" {
                 fn IsDebuggerPresent() -> i32;
             }

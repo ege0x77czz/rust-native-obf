@@ -26,7 +26,11 @@ pub const fn utf16_len(s: &str) -> usize {
     let mut len = 0;
     let mut i = 0;
     while i < bytes.len() {
-        if let Some((chr, step)) = decode_utf8(&bytes[i..]) {
+        let slice_len = bytes.len() - i;
+        let remaining = unsafe { 
+            core::slice::from_raw_parts(bytes.as_ptr().add(i), slice_len) 
+        };
+        if let Some((chr, step)) = decode_utf8(remaining) {
             len += if chr >= 0x10000 { 2 } else { 1 };
             i += step;
         } else {
@@ -42,7 +46,11 @@ pub const fn encode_utf16<const N: usize>(s: &str) -> [u16; N] {
     let mut i = 0;
     let mut pos = 0;
     while i < bytes.len() {
-        if let Some((chr, step)) = decode_utf8(&bytes[i..]) {
+        let slice_len = bytes.len() - i;
+        let remaining = unsafe { 
+            core::slice::from_raw_parts(bytes.as_ptr().add(i), slice_len) 
+        };
+        if let Some((chr, step)) = decode_utf8(remaining) {
             if chr >= 0x10000 {
                 let code = chr - 0x10000;
                 result[pos] = (0xd800 + (code >> 10)) as u16;
